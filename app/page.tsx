@@ -80,7 +80,7 @@ const Home: React.FC = () => {
           ) : isDragActive ? (
             <p>Drop the video here ...</p>
           ) : (
-            <p>Drag 'n' drop a video here, or click to select a video</p>
+            <p>Drag & drop a video here, or click to select a video</p>
           )}
           {uploadError && (
             <p className="text-red-500 text-sm mt-2">{uploadError}</p>
