@@ -63,7 +63,8 @@ const Home: React.FC = () => {
         <Alert className="bg-primary/60 text-white">
           <AlertTitle>Hey Pal !!!</AlertTitle>
           <AlertDescription>
-            Use short video <span className="font-bold">(2min max)</span> files
+            Use short video{" "}
+            <span className="font-bold">(2min max / less than 2mb)</span> files
             for better performance.
           </AlertDescription>
         </Alert>
