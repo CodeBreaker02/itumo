@@ -3,6 +3,8 @@
 import React from "react";
 import { Logo } from "@/lib/svgs";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -16,6 +18,9 @@ const Header: React.FC = () => {
       <div className="container flex justify-between items-center mx-auto">
         <a href="/" className="flex items-center z-40">
           <Logo />
+          <Badge variant={"outline"} className="mx-2 mt-2">
+            v.0.0.1
+          </Badge>
         </a>
         <button
           data-collapse-toggle="navbar-default"
@@ -45,7 +50,13 @@ const Header: React.FC = () => {
         >
           <ul className="flex flex-col gap-5 md:flex-row items-center justify-center min-h-screen md:min-h-0  text-foreground">
             <li>
-              <Button size="lg" className="md:size-sm md:px-4">
+              <Button
+                size="lg"
+                className="md:size-sm md:px-4"
+                onClick={() => {
+                  toast.info("Studio is not available yet.");
+                }}
+              >
                 Get in studio
               </Button>
             </li>

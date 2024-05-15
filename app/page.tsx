@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import LoaderTextIcon from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
+import { AlertTitle, Alert, AlertDescription } from "@/components/ui/alert";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -58,7 +59,14 @@ const Home: React.FC = () => {
         <br />
         AI-Enhanced Multilingual Video Subtitles
       </div>
-      <div className="flex flex-col sm:flex-row justify-between w-full sm:w-3/4 lg:w-2/3">
+      <div className="flex-col justify-center items-center w-full sm:w-3/4 lg:w-2/3">
+        <Alert className="bg-primary/60 text-white">
+          <AlertTitle>Hey Pal !!!</AlertTitle>
+          <AlertDescription>
+            Use short video <span className="font-bold">(2min max)</span> files
+            for better performance.
+          </AlertDescription>
+        </Alert>
         <div
           {...getRootProps()}
           className="text-xl bg-primary/10 border-2 border-dashed border-muted-foreground rounded-lg p-4 sm:p-6 md:p-10 text-center w-full h-[500px] flex flex-col justify-center items-center overflow-hidden"

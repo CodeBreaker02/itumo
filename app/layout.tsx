@@ -6,17 +6,6 @@ import Header from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 
-/*const cabinetGroteskFont = localFont({
-  variable: "--cabinet-grotesk-font",
-  display: "swap",
-  src: [
-    {
-      path: "../fonts/CabinetGrotesk-Variable.ttf",
-      weight: "variable",
-    },
-  ],
-});*/
-
 const satoshiFont = localFont({
   variable: "--satoshi-font",
   display: "swap",

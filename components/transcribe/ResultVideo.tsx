@@ -6,6 +6,7 @@ import { transcriptionItemsToSrt } from "@/lib/awsTranscriptionHelpers";
 import roboto from "../../fonts/Roboto.ttf";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Loader } from "lucide-react";
 
 interface TranscriptionItem {
   start_time: string;
@@ -41,6 +42,7 @@ export default function ResultVideo({
   const [progress, setProgress] = useState<number>(1);
   const ffmpegRef = useRef<FFmpeg>(new FFmpeg());
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -69,6 +71,7 @@ export default function ResultVideo({
   }
 
   const transcode = async () => {
+    setIsLoading(true);
     try {
       const ffmpeg = ffmpegRef.current;
       const srt = transcriptionItemsToSrt(
@@ -82,7 +85,7 @@ export default function ResultVideo({
         videoRef.current.src = videoUrl;
         await new Promise((resolve, reject) => {
           videoRef.current!.onloadedmetadata = resolve;
-          videoRef.current!.onerror = reject; // Handle media loading errors
+          videoRef.current!.onerror = reject;
         });
         const duration = videoRef.current.duration;
         ffmpeg.on("log", ({ message }) => {
@@ -114,7 +117,8 @@ export default function ResultVideo({
       }
     } catch (error) {
       console.error("Error during video transcoding:", error);
-      // Handle or log the error appropriately
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -149,7 +153,20 @@ export default function ResultVideo({
         ></video>
       </div>
       <footer className="fixed bottom-0 left-0 z-20 w-full shadow shadow-gray-500 flex items-center justify-center p-6 bg-background">
-        <Button onClick={transcode}>Apply captions</Button>
+        <Button
+          type="submit"
+          onClick={transcode}
+          className={` mt-4 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <Loader className="animate-spin h-5 w-5" />
+            </>
+          ) : (
+            "Apply captions"
+          )}
+        </Button>
       </footer>
     </div>
   );

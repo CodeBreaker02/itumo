@@ -116,7 +116,7 @@ export default function Page({ params }: { params: { fileName: string } }) {
 
   if (isTranscribing) {
     return (
-      <div className="p-16 mt-20">
+      <div className="py-16 p-4 mt-20">
         <LoaderTextIcon text="Transcribing your video..." />
       </div>
     );
@@ -124,7 +124,7 @@ export default function Page({ params }: { params: { fileName: string } }) {
 
   if (isFetchingInfo) {
     return (
-      <div className="p-16 mt-20">
+      <div className="py-16 p-4 mt-20">
         <LoaderTextIcon text="Retrieving video data ..." />
       </div>
     );
@@ -146,56 +146,58 @@ export default function Page({ params }: { params: { fileName: string } }) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 flex flex-col items-center">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold">
-                  Word Count Difference: {wordCountDiff}
-                </h3>
-                {wordCountDiff !== 0 && (
-                  <p className="text-sm text-red-500">
-                    {wordCountDiff > 0 ? "More" : "Fewer"} words in the Yoruba
-                    translation.
-                  </p>
-                )}
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="outline">
-                      View Translation Comparison
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle>Translation Comparison</SheetTitle>
-                      <SheetClose />
-                    </SheetHeader>
-                    <SheetDescription>
-                      Compare the original English text with the Yoruba
+              {!isTranslating && (
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold">
+                    Word Count Difference: {wordCountDiff}
+                  </h3>
+                  {wordCountDiff !== 0 && (
+                    <p className="text-sm text-red-500">
+                      {wordCountDiff > 0 ? "More" : "Fewer"} words in the Yoruba
                       translation.
-                    </SheetDescription>
-                    <div className="flex flex-col space-y-4">
-                      <div>
-                        <h3 className="font-semibold">English (Original)</h3>
-                        <p>{originalText}</p>
+                    </p>
+                  )}
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button variant="outline">
+                        View Translation Comparison
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent>
+                      <SheetHeader>
+                        <SheetTitle>Translation Comparison</SheetTitle>
+                        <SheetClose />
+                      </SheetHeader>
+                      <SheetDescription>
+                        Compare the original English text with the Yoruba
+                        translation.
+                      </SheetDescription>
+                      <div className="flex flex-col space-y-4">
+                        <div>
+                          <h3 className="font-semibold">English (Original)</h3>
+                          <p>{originalText}</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Yoruba (Translated)</h3>
+                          <p>{yorubaItems.join(" ")}</p>
+                        </div>
+                        <div className="text-center">
+                          <h4 className="text-lg font-bold">
+                            Word Count Difference: {wordCountDiff}
+                          </h4>
+                          <p
+                            className={`text-sm ${wordCountDiff !== 0 ? "text-red-500" : "text-green-500"}`}
+                          >
+                            {wordCountDiff > 0
+                              ? "More words in Yoruba"
+                              : "Fewer words in Yoruba"}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold">Yoruba (Translated)</h3>
-                        <p>{yorubaItems.join(" ")}</p>
-                      </div>
-                      <div className="text-center">
-                        <h4 className="text-lg font-bold">
-                          Word Count Difference: {wordCountDiff}
-                        </h4>
-                        <p
-                          className={`text-sm ${wordCountDiff !== 0 ? "text-red-500" : "text-green-500"}`}
-                        >
-                          {wordCountDiff > 0
-                            ? "More words in Yoruba"
-                            : "Fewer words in Yoruba"}
-                        </p>
-                      </div>
-                    </div>
-                  </SheetContent>
-                </Sheet>
-              </div>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+              )}
               <TranscriptionEditor
                 awsTranscriptionItems={awsTranscriptionItems}
                 yorubaItems={yorubaItems}
